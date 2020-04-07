@@ -1,6 +1,6 @@
 # Still Images Documentation
 
-This folder contains still images used for testing the "trafflightdet_stillimg.py" code.
+This folder contains still images used for testing the "traffLightDet_stillImg.py" code.
 
 The images below were taken from Kenneth Mercado via phone:
   - 'greenlight01.png'
