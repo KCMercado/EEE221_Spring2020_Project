@@ -21,4 +21,6 @@ There are two codes in this respository:
         
 There is a Reference text document that lists all sources used during the project.
 
-There is a folder called "Still Images" that was used to test out the first code and another folder called "Still Images Results" to show the results of the first code.
+There is a folder called "Images" that contains all images involved in this project.
+
+There is a folder called "Videos" that contains all videos involved in this project.
