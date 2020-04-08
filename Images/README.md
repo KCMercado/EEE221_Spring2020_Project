@@ -15,6 +15,7 @@ Inside this folder we have:
   The images that were taken from HevLfreis' respository, where they were also trying to detect traffice light.
   This respository was accessed on 4/6/2020, therefore, it is not known if it has been updated since then.
   Here is a link to his repository is: https://github.com/HevLfreis/TrafficLight-Detector
+    - '14.jpg'
     - '16.jpg'
     - '24.jpg'
     - 'IMG_218.JPG'
