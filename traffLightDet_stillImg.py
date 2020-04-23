@@ -13,11 +13,11 @@ hsv = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
 
 #Define the lower and upper HSV values for red. Then create the mask for red
 #The mask is a threshold to only get red. However there are two set of ranges for red
-lower_red1 = np.array([0,180,180])
+lower_red1 = np.array([0,100,100])
 upper_red1 = np.array([8,255,255])
 mask_red1 = cv2.inRange(hsv, lower_red1, upper_red1)
 
-lower_red2 = np.array([170,150,150])
+lower_red2 = np.array([150,100,100])
 upper_red2 = np.array([180,255,255])
 mask_red2 = cv2.inRange(hsv, lower_red2, upper_red2)
 
@@ -37,14 +37,14 @@ upper_green = np.array([100,255,255])
 mask_green = cv2.inRange(hsv, lower_green, upper_green)
 
 #Perform morphological operations to remove any small blobs
-mask_redComb = cv2.erode(mask_redComb, None, iterations=1)
-mask_redComb = cv2.dilate(mask_redComb, None, iterations=1)
-
-mask_yellow = cv2.erode(mask_yellow, None, iterations=1)
-mask_yellow = cv2.dilate(mask_yellow, None, iterations=1)
-
-mask_green = cv2.erode(mask_green, None, iterations=1)
-mask_green = cv2.dilate(mask_green, None, iterations=1)
+##mask_redComb = cv2.erode(mask_redComb, None, iterations=1)
+##mask_redComb = cv2.dilate(mask_redComb, None, iterations=1)
+##
+##mask_yellow = cv2.erode(mask_yellow, None, iterations=1)
+##mask_yellow = cv2.dilate(mask_yellow, None, iterations=1)
+##
+##mask_green = cv2.erode(mask_green, None, iterations=1)
+##mask_green = cv2.dilate(mask_green, None, iterations=1)
 
 #Combine all masks
 mask = mask_redComb + mask_yellow + mask_green
@@ -53,7 +53,7 @@ mask = mask_redComb + mask_yellow + mask_green
 res = cv2.bitwise_and(image, image, mask = mask)
 
 #Hough transform circle detection for all three colors
-r_circles = cv2.HoughCircles(mask_redComb, cv2.HOUGH_GRADIENT, 1, 80, param1=50, param2=8, minRadius=4, maxRadius=50)
+r_circles = cv2.HoughCircles(mask_redComb, cv2.HOUGH_GRADIENT, 1, 80, param1=50, param2=8, minRadius=3, maxRadius=50)
 y_circles = cv2.HoughCircles(mask_yellow, cv2.HOUGH_GRADIENT, 1, 80, param1=50, param2=8, minRadius=3, maxRadius=50)
 g_circles = cv2.HoughCircles(mask_green, cv2.HOUGH_GRADIENT, 1, 60, param1=50, param2=10, minRadius=3, maxRadius=50)
 
@@ -89,11 +89,12 @@ if g_circles is not None:
 
 #Show the original, masks, and results
 cv2.imshow("Original", image)
-cv2.imshow("Mask Red", mask_redComb)
-cv2.imshow("Mask Yellow", mask_yellow)
-cv2.imshow("Mask Green", mask_green)
-cv2.imshow("Mask All", mask)
-cv2.imshow("Results", res)
+cv2.imshow("Mask Red1", mask_red1)
+cv2.imshow("Mask Red2", mask_red2)
+##cv2.imshow("Mask Yellow", mask_yellow)
+##cv2.imshow("Mask Green", mask_green)
+##cv2.imshow("Mask All", mask)
+##cv2.imshow("Results", res)
 
 cv2.waitKey(0)
 cv2.destroyAllWindows()
