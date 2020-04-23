@@ -1,6 +1,7 @@
 #Import the necessay packages
 from picamera.array import PiRGBArray
 from picamera import PiCamera
+from datetime import datetime
 import time
 import cv2
 import numpy as np
@@ -17,7 +18,7 @@ time.sleep(0.1)
 
 #Define the codec and create Videowriter object
 fourcc = cv2.VideoWriter_fourcc(*'XVID')
-out = cv2.VideoWriter('traffLightDet_recording.mp4',fourcc,5.0,(640,480))
+out = cv2.VideoWriter('traffLightDet_Record_'+str(datetime.now())+'.mp4',fourcc,5.0,(640,480))
 
 #Define font style
 font = cv2.FONT_HERSHEY_SIMPLEX
@@ -28,6 +29,9 @@ for frame in camera.capture_continuous(rawCapture, format='bgr', use_video_port=
     #Grab the raw NumPy array representing the image, then initialize the timestamp
     #and occupied/unoccupied text
     image = frame.array
+    
+    #Display current DateTime while video is recording
+    cv2.putText(image,str(datetime.now()),(10,30), font, 1, (105,105,105), 2, cv2.LINE_AA)
     
     #Note: In case of the need to virtically flip the video, enable the code below
     #image = cv2.flip(image,1)
@@ -61,14 +65,14 @@ for frame in camera.capture_continuous(rawCapture, format='bgr', use_video_port=
     mask_green = cv2.inRange(hsv, lower_green, upper_green)
     
     #Perform morphological operations to remove any small blobs
-    mask_redComb = cv2.erode(mask_redComb, None, iterations=1)
-    mask_redComb = cv2.dilate(mask_redComb, None, iterations=1)
-
-    mask_yellow = cv2.erode(mask_yellow, None, iterations=1)
-    mask_yellow = cv2.dilate(mask_yellow, None, iterations=1)
-
-    mask_green = cv2.erode(mask_green, None, iterations=1)
-    mask_green = cv2.dilate(mask_green, None, iterations=1)
+##    mask_redComb = cv2.erode(mask_redComb, None, iterations=1)
+##    mask_redComb = cv2.dilate(mask_redComb, None, iterations=1)
+##
+##    mask_yellow = cv2.erode(mask_yellow, None, iterations=1)
+##    mask_yellow = cv2.dilate(mask_yellow, None, iterations=1)
+##
+##    mask_green = cv2.erode(mask_green, None, iterations=1)
+##    mask_green = cv2.dilate(mask_green, None, iterations=1)
     
     #Combine all masks
     mask = mask_redComb + mask_yellow + mask_green
@@ -113,11 +117,12 @@ for frame in camera.capture_continuous(rawCapture, format='bgr', use_video_port=
     
     #Show the original, masks, and results
     cv2.imshow("Original", image)
-    cv2.imshow("Mask Red", mask_redComb)
-    cv2.imshow("Mask Yellow", mask_yellow)
-    cv2.imshow("Mask Green", mask_green)
-    cv2.imshow("Mask All", mask)
-    cv2.imshow("Results", res)
+    cv2.imshow("Mask Red1", mask_red1)
+    cv2.imshow("Mask Red2", mask_red2)
+##    cv2.imshow("Mask Yellow", mask_yellow)
+##    cv2.imshow("Mask Green", mask_green)
+##    cv2.imshow("Mask All", mask)
+##    cv2.imshow("Results", res)
 
 
     #Write to the out file (this saves a video)
